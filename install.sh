@@ -1,4 +1,4 @@
-
+#!/bin/sh
 
 gfish="glassfish.zip"
 gfishdir="glassfish"
@@ -10,7 +10,7 @@ if [ ! -e $gfish ]; then
 fi
 
 
-if [ -e $gfish && ! -e $gfishdir ]; then
+if [ -e $gfish ] && [ ! -e $gfishdir ]; then
 
    unzip -d glassfish $gfish
 
