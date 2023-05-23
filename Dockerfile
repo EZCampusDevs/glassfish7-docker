@@ -14,7 +14,12 @@ RUN /opt/app/glassfish7/glassfish/bin/asadmin --user admin --passwordfile /tmp/p
     ; /opt/app/glassfish7/glassfish/bin/asadmin stop-domain domain1
 RUN rm /tmp/password_?.txt
 
-ADD test.war /opt/app/glassfish7/glassfish/domains/domain1/autodeploy/test.war
+# # if you want to add a jar at build time
+# ADD test.war /opt/app/glassfish7/glassfish/domains/domain1/autodeploy/test.war
+
+# # alternatively, add it before copying glassfish over
+# mkdir -p glassfish/glassfish7/glassfish/domains/domain1/autodeploy/
+# cp test.war glassfish/glassfish7/glassfish/domains/domain1/autodeploy/
 
 # # manually do stuff
 # CMD ["java", "-jar", "/opt/app/glassfish7/glassfish/lib/client/appserver-cli.jar", "--interactive"]
