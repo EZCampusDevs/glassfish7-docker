@@ -12,10 +12,18 @@ pipeline {
                     export MS1_PASSWORD=${MS1_PASSWORD}
                     """
 
-                    // Add execute permissions to the script
-                    sh 'chmod +x exportCredentials.sh'
-                    // Run the bash script
-                    sh './exportCredentials.sh'
+                    sshPublisher(publishers: [
+                        sshPublisherDesc(configName: '2GB_Glassfish_VPS', transfers: [
+                            sshTransfer(cleanRemote: false, excludes: '', execCommand: '''
+                              
+                              chmod +x exportCredentials.sh
+                              ./exportCredentials.sh          
+                            ''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, 
+                            noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, 
+                            removePrefix: '', sourceFiles: 'exportCredentials.sh')
+                        ], 
+                        usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)
+                    ])
                 }
             }
         }
