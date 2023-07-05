@@ -2,6 +2,23 @@ pipeline {
   agent any  
 
     stages { 
+        stage('Export Credentials') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'MYSQL_USER_PASS_1', passwordVariable: 'MS1_PASSWORD', usernameVariable: 'MS1_USERNAME')]) {
+                    // Write the bash script to a file
+                    writeFile file: 'exportCredentials.sh', text: """
+                    #!/bin/bash
+                    export MS1_USERNAME=${MS1_USERNAME}
+                    export MS1_PASSWORD=${MS1_PASSWORD}
+                    """
+
+                    // Add execute permissions to the script
+                    sh 'chmod +x exportCredentials.sh'
+                    // Run the bash script
+                    sh './exportCredentials.sh'
+                }
+            }
+        }
 
       stage('Build Docker Container') { 
 
