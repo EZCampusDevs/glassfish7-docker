@@ -14,7 +14,7 @@ pipeline {
                 transfers: [
                 sshTransfer(cleanRemote: false,
                   excludes: '', 
-                  execCommand: ```
+                  execCommand: '''
                   git clone https://github.com/EZCampusDevs/glassfish7-docker
                   cd glassfish7-docker
                   git pull
