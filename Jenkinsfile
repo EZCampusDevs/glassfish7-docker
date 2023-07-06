@@ -10,7 +10,7 @@ pipeline {
   "username" : "${MS1_USERNAME}",
   "password" : "${MS1_PASSWORD}",
   "host" : "mysql-instance",
-  "port" : "3306",
+  "port" : 3306,
   "db_name" : "ezcampus_db"
 }
 """
