@@ -1,7 +1,7 @@
 #!/bin/sh
 
-
-autodeploy="./glassfish/glassfish7/glassfish/domains/domain1/autodeploy"
+domain="./glassfish/glassfish7/glassfish/domains/domain1"
+autodeploy=$domain/autodeploy
 
 mkdir -p $autodeploy | true
 
@@ -58,6 +58,11 @@ else
    echo "Passing the argument $USE_LOG_FILE_ARGUMENT will write all stdout and sderr to a logfile"
 fi
 
+if [ -f "./token.json" ]; then
+
+   mv ./token.json "$domain1"  
+
+fi
 
 docker build -t glassfish7 .
 

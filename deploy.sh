@@ -75,8 +75,6 @@ run_container() {
       -p "127.0.0.1:$admin_port:4848" \
       --name "$container_name" \
       --network EZnet \
-      -e MS1_USERNAME="$MS1_USERNAME" \
-      -e MS1_PASSWORD="$MS1_PASSWORD" \
       $DOCKER_IMAGE 
 
 }

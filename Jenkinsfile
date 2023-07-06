@@ -6,24 +6,13 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'MYSQL_USER_PASS_1', passwordVariable: 'MS1_PASSWORD', usernameVariable: 'MS1_USERNAME')]) {
                     // Write the bash script to a file
-                    writeFile file: 'exportCredentials.sh', text: """
-                    #!/bin/bash
-                    export MS1_USERNAME=${MS1_USERNAME}
-                    export MS1_PASSWORD=${MS1_PASSWORD}
-                    """
-
-                    sshPublisher(publishers: [
-                        sshPublisherDesc(configName: '2GB_Glassfish_VPS', transfers: [
-                            sshTransfer(cleanRemote: false, excludes: '', execCommand: '''
-                              
-                              chmod +x exportCredentials.sh
-                              ./exportCredentials.sh          
-                            ''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, 
-                            noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, 
-                            removePrefix: '', sourceFiles: 'exportCredentials.sh')
-                        ], 
-                        usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)
-                    ])
+                    writeFile file: './token.json', text: """{
+  "username" : "${MS1_USERNAME}",
+  "password" : "${MS1_PASSWORD}",
+  "port" : "3306",
+  "db_name" : "ezcampus_db"
+}
+"""
                 }
             }
         }
@@ -40,9 +29,12 @@ pipeline {
                 sshTransfer(cleanRemote: false,
                   excludes: '', 
                   execCommand: '''
+                  cd ~/pipeline_glassfish_build
                   git clone https://github.com/EZCampusDevs/glassfish7-docker
                   cd glassfish7-docker
                   git pull
+
+                  cp ../token.json .
 
                   chmod +x install.sh
                   ./install.sh
@@ -56,10 +48,10 @@ pipeline {
                   makeEmptyDirs: false,
                   noDefaultExcludes: false,
                   patternSeparator: '[, ]+', 
-                  remoteDirectory: './warbuilds',
+                  remoteDirectory: './pipeline_glassfish_build',
                   remoteDirectorySDF: false,
                   removePrefix: '',
-                  sourceFiles: '')
+                  sourceFiles: './token.json')
                     ], 
                     usePromotionTimestamp: false,
                     useWorkspaceInPromotion: false,
