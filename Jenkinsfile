@@ -43,6 +43,8 @@ pipeline {
                   chmod +x build.sh
                   ./build.sh USE_LOG_FILE ~/warbuilds
 
+                  chmod +x deploy.sh
+                  ./deploy.sh USE_LOG_FILE
                   ''', 
                   execTimeout: 120000, 
                   flatten: false,
