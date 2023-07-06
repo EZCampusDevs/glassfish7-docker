@@ -31,12 +31,14 @@ pipeline {
                   excludes: '', 
                   execCommand: '''
                   cd ~/pipeline_glassfish_build
+                  
                   git clone https://github.com/EZCampusDevs/glassfish7-docker
+
+                  mv ./token.json glassfish7-docker
+                  
                   cd glassfish7-docker
                   git pull
-
-                  cp ../token.json .
-
+                  
                   chmod +x install.sh
                   ./install.sh
 
@@ -51,10 +53,10 @@ pipeline {
                   makeEmptyDirs: false,
                   noDefaultExcludes: false,
                   patternSeparator: '[, ]+', 
-                  remoteDirectory: './pipeline_glassfish_build',
+                  remoteDirectory: 'pipeline_glassfish_build',
                   remoteDirectorySDF: false,
                   removePrefix: '',
-                  sourceFiles: './token.json')
+                  sourceFiles: 'token.json')
                     ], 
                     usePromotionTimestamp: false,
                     useWorkspaceInPromotion: false,
