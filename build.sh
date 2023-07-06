@@ -1,9 +1,11 @@
 #!/bin/sh
 
-domain="./glassfish/glassfish7/glassfish/domains/domain1"
-autodeploy=$domain/autodeploy
+domain1="./glassfish/glassfish7/glassfish/domains/domain1"
+autodeploy=$domain1/autodeploy
+config=$domain1/config
 
 mkdir -p $autodeploy | true
+mkdir -p $config | true
 
 USE_LOG_FILE_ARGUMENT="USE_LOG_FILE"
 
@@ -60,7 +62,7 @@ fi
 
 if [ -f "./token.json" ]; then
 
-   mv ./token.json "$domain1"  
+   mv ./token.json "$config"  
 
 fi
 
