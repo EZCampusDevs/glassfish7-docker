@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 domain1="./glassfish/glassfish7/glassfish/domains/domain1"
 autodeploy=$domain1/autodeploy
