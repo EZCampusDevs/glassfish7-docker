@@ -1,6 +1,10 @@
 FROM eclipse-temurin:17-alpine
+
 RUN mkdir /opt/app
-COPY glassfish/ /opt/app
+
+COPY glassfish.zip /tmp/glassfish.zip
+
+RUN unzip -d /opt/app /tmp/glassfish.zip && rm /tmp/glassfish.zip
 
 # Allow Derby to start as daemon (used by some Java EE app, such as Pet Store)
 RUN echo "grant { permission java.net.SocketPermission \"localhost:1527\", \"listen\"; };" >> $JAVA_HOME/lib/security/java.policy
@@ -8,10 +12,12 @@ RUN echo "grant { permission java.net.SocketPermission \"localhost:1527\", \"lis
 # # Secure GF installation with a password and authorize network access
 ADD password_1.txt /tmp/password_1.txt
 ADD password_2.txt /tmp/password_2.txt
-RUN /opt/app/glassfish7/glassfish/bin/asadmin --user admin --passwordfile /tmp/password_1.txt change-admin-password --domain_name domain1 \
-    ; /opt/app/glassfish7/glassfish/bin/asadmin start-domain domain1 \
-    ; /opt/app/glassfish7/glassfish/bin/asadmin --user admin --passwordfile /tmp/password_2.txt enable-secure-admin \
-    ; /opt/app/glassfish7/glassfish/bin/asadmin stop-domain domain1
+
+RUN /opt/app/glassfish7/glassfish/bin/asadmin --user admin --passwordfile /tmp/password_1.txt change-admin-password --domain_name domain1; \
+    /opt/app/glassfish7/glassfish/bin/asadmin start-domain domain1; \
+    /opt/app/glassfish7/glassfish/bin/asadmin --user admin --passwordfile /tmp/password_2.txt enable-secure-admin; \
+    /opt/app/glassfish7/glassfish/bin/asadmin stop-domain domain1;
+
 RUN rm /tmp/password_?.txt
 
 # # if you want to add a jar at build time
