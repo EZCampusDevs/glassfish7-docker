@@ -4,37 +4,33 @@
 This repo is used to build a docker image to run [Glassfish7](https://projects.eclipse.org/projects/ee4j.glassfish/downloads).
 
 
-### Usage (with Make)
+## Building
 
-Ensure you have docker installed, then from the root of the repo run:
+Make sure you have `wget` or `curl`, and `unzip`.
+
+Then in a unix-like environment run `build.sh`. This should download the Glassfish zip and store it in the cache folder, verify it's sha sum and build the docker image.
+
+The resulting image should be called `glassfish7`.
+
+
+## Usage
+
+Using docker run, you will want to specify some arguments:
+
 ```sh
-$ make build
+docker run --rm \
+   -p 4848:4848 \
+   -p 8080:8080 \
+   -v "./autodeploy":/opt/app/glassfish7/glassfish/domains/domain1/autodeploy \
+   -v "./apps":/opt/app/glassfish7/glassfish/domains/domain1/config/apps \
+   glassfish7:latest
 ```
 
+- Port `4848` is for the admin panel
 
-### Usage (manually)
+- Port `8080` is for the API
 
-Since I was haiving some issues with using the auto build on the vps, this is here in case of that.
+- Volume `.../autodeploy` is for easy deployment of war files
 
-Download Glassfish:
-```sh
-$ wget -O glassfish.zip https://download.eclipse.org/ee4j/glassfish/glassfish-7.0.4.zip
-```
+- Volume `.../apps` will be located in the working directory of deployed war files
 
-Unzip the contents into the folder `glassfish`:
-```sh
-$ unzip -d glassfish glassfish.zip
-```
-
-Build the docker image:
-```sh
-$ docker build -t glassfish7 .
-```
-
-
-### Using the image
-
-Once you've built the image use the name `glassfish7` to create containers:
-```sh
-$ docker run -itr --rm -p 4848:4848 -p 8080:8080 glassfish7
-```
