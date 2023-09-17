@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 gfish_url="https://download.eclipse.org/ee4j/glassfish/glassfish-7.0.4.zip"
 gfish_sha256="4901824600668b01c55ca571d4230f987800b1cd4f09a93629b7b5f05058c577"
