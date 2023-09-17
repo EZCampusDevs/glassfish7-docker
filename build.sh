@@ -64,7 +64,7 @@ if [ -e "$gfish_dl_path" ]; then
 
    echo "Glassfish path already exists, checking file integrity..."
 
-   if hash_check "$gfish_dl_path"; then
+   if ! hash_check "$gfish_dl_path"; then
 
       echo "Existing glassfish path did not match expected sha256"
 
@@ -81,7 +81,7 @@ fi
 
 if [ ! -e "$gfish_dl_path" ]; then
 
-   if ! which "wget"; then
+   if which "wget"; then
 
       wget -O "$gfish_dl_path" "$gfish_url"
 
