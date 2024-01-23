@@ -1,7 +1,7 @@
 #!/bin/bash
 
-gfish_url="https://download.eclipse.org/ee4j/glassfish/glassfish-7.0.4.zip"
-gfish_sha256="4901824600668b01c55ca571d4230f987800b1cd4f09a93629b7b5f05058c577"
+gfish_url="https://download.eclipse.org/ee4j/glassfish/glassfish-7.0.9.zip"
+gfish_sha256="b9387b8769539ecbee401d1e3695416fa4d2cd92556df6e9a9e6afb94065be6b"
 
 gfish_dl_dir="$HOME/.cache/ezcampus/glassfish"
 gfish_dl_name=$(echo "$gfish_url" | awk -F"/" '{print $NF}')
