@@ -34,3 +34,7 @@ docker run --rm \
 
 - Volume `.../apps` will be located in the working directory of deployed war files
 
+Once the container is running place your war files into the `autodeploy` folder. This will automatically deploy them to Glassfish.
+
+You can build war files using `mvn clean package` from the directory which contains the `pom.xml`. This will commonly output the war file into `target/{artifact-id}.war`.
+
